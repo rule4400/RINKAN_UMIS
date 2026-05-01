@@ -10,6 +10,7 @@ jobs:
     name: Build for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         include:
           - os: windows-latest
@@ -33,6 +34,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install "flet[build]==0.27.6"
           pip install -r requirements.txt
+          python --version
+          pip list
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -44,12 +47,12 @@ jobs:
           PYTHONUTF8: 1
           PYTHONIOENCODING: utf-8
         run: |
-          # ディレクトリ構造を確認（デバッグ用）
+          # ディレクトリ構造を確認
           ls -R
-          # バージョン名に関わらずメインスクリプトを main.py にコピー
+          # メインスクリプトを main.py にコピー
           cp rinkan_umis_v*.py main.py
-          # カレントディレクトリ (.) を明示的に指定してビルド
-          flet build ${{ matrix.os == 'windows-latest' && 'windows' || 'macos' }} . --product "RINKAN_UMIS" --verbose
+          # python -m を使用して明示的にビルドを実行
+          python -m flet build ${{ matrix.os == 'windows-latest' && 'windows' || 'macos' }} . --product "RINKAN_UMIS" --verbose
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
