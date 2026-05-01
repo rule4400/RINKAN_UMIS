@@ -43,8 +43,9 @@ jobs:
           PYTHONUTF8: 1
           PYTHONIOENCODING: utf-8
         run: |
-          # Flet build command
-          flet build ${{ matrix.os == 'windows-latest' && 'windows' || 'macos' }} rinkan_umis_v1.1.32.py --product "RINKAN_UMIS"
+          # Flet build はデフォルトで main.py を探すため、一時的にコピーして実行
+          cp rinkan_umis_v1.1.32.py main.py
+          flet build ${{ matrix.os == 'windows-latest' && 'windows' || 'macos' }} --product "RINKAN_UMIS"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
