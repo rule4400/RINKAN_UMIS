@@ -46,9 +46,10 @@ jobs:
         run: |
           # ディレクトリ構造を確認（デバッグ用）
           ls -R
-          # Flet build はデフォルトで main.py を探すため、一時的にコピーして実行
-          cp rinkan_umis_v1.1.32.py main.py
-          flet build ${{ matrix.os == 'windows-latest' && 'windows' || 'macos' }} --product "RINKAN_UMIS" --verbose
+          # バージョン名に関わらずメインスクリプトを main.py にコピー
+          cp rinkan_umis_v*.py main.py
+          # カレントディレクトリ (.) を明示的に指定してビルド
+          flet build ${{ matrix.os == 'windows-latest' && 'windows' || 'macos' }} . --product "RINKAN_UMIS" --verbose
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
