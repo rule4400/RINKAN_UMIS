@@ -44,6 +44,8 @@ jobs:
           PYTHONUTF8: 1
           PYTHONIOENCODING: utf-8
         run: |
+          # ディレクトリ構造を確認（デバッグ用）
+          ls -R
           # Flet build はデフォルトで main.py を探すため、一時的にコピーして実行
           cp rinkan_umis_v1.1.32.py main.py
           flet build ${{ matrix.os == 'windows-latest' && 'windows' || 'macos' }} --product "RINKAN_UMIS" --verbose
