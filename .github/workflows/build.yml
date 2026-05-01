@@ -14,7 +14,7 @@ jobs:
         include:
           - os: windows-latest
             platform: windows
-          - os: macos-latest
+          - os: macos-14
             platform: macos-arm
           - os: macos-13
             platform: macos-intel
@@ -26,7 +26,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       - name: Install Python dependencies
         run: |
@@ -39,9 +39,11 @@ jobs:
           channel: 'stable'
 
       - name: Build Flet app
+        env:
+          PYTHONUTF8: 1
+          PYTHONIOENCODING: utf-8
         run: |
           # Flet build command
-          # Note: rinkan_umis_v1.1.32.py をメインスクリプトとして指定
           flet build ${{ matrix.os == 'windows-latest' && 'windows' || 'macos' }} rinkan_umis_v1.1.32.py --product "RINKAN_UMIS"
 
       - name: Upload Artifact
