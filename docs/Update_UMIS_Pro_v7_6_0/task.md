@@ -1,0 +1,8 @@
+- [x] `rinkan_umis_pro_v7.6.0.py` の新規作成（v7.5.2ベース）
+- [x] バージョン情報の更新 (`VERSION = "7.6.0"`)
+- [x] `_build_header` メソッドの置換
+- [x] `_build_bottom_bar` メソッド의 置換
+- [x] `show_identity_modal` メソッドの置換
+- [x] `on_splitter_drag` メソッドの置換
+- [x] 動作確認（ファイル作成の確認）
+- [x] 修正内容の確認（Walkthrough）の作成

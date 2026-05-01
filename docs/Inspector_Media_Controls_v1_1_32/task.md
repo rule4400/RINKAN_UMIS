@@ -1,0 +1,6 @@
+- [x] `__init__` でメディアコントロール用の変数を初期化
+- [x] `_build_modern_inspector` でコントロールをUIに配置
+- [x] `_update_inspector_details` でコントロールの表示/非表示を制御
+- [x] `_build_preview_widget` にイベントハンドラをアタッチ
+- [x] イベントハンドラ（再生、シーク、位置更新）の実装
+- [x] 動作確認（コードレビュー）
