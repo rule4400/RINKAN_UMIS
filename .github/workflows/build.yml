@@ -1,0 +1,53 @@
+name: Build RINKAN UMIS
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            platform: windows
+          - os: macos-latest
+            platform: macos-arm
+          - os: macos-13
+            platform: macos-intel
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Build Flet app
+        run: |
+          # Flet build command
+          # Note: rinkan_umis_v1.1.32.py をメインスクリプトとして指定
+          flet build ${{ matrix.os == 'windows-latest' && 'windows' || 'macos' }} rinkan_umis_v1.1.32.py --product "RINKAN_UMIS"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RINKAN_UMIS-${{ matrix.platform }}
+          path: |
+            build/windows
+            build/macos
